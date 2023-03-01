@@ -38,6 +38,15 @@ public class ListaNotasActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        NotaDAO notaDAO = new NotaDAO();
+        List<Nota> todasNotas = notaDAO.todos();
+        configuraRecyclerView(todasNotas);
+
+        super.onResume();
+    }
+
     private List<Nota> notasDeExemplo() {
         NotaDAO dao = new NotaDAO();
         for (int i = 1; i <= 1000; i++) {
