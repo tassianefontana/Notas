@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Notas"
         tools:targetApi="31">
         <activity
-            android:name=".FormularioNotaActivity"
+            android:name=".ui.FormularioNotaActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ListaNotasActivity"
