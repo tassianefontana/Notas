@@ -1,6 +1,9 @@
 package com.tassicompany.notas.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +27,15 @@ public class ListaNotasActivity extends AppCompatActivity {
 
         List<Nota> notas = notasDeExemplo();
         configuraRecyclerView(notas);
+
+        TextView botaoInsereNota = findViewById(R.id.lista_notas_insere_nota);
+        botaoInsereNota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iniciaFormularioNota = new Intent(ListaNotasActivity.this, FormularioNotaActivity.class);
+                startActivity(iniciaFormularioNota);
+            }
+        });
     }
 
     private List<Nota> notasDeExemplo() {

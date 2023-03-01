@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Notas"
         tools:targetApi="31">
         <activity
+            android:name=".FormularioNotaActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ListaNotasActivity"
             android:exported="true">
             <intent-filter>
