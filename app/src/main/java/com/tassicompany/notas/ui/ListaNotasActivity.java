@@ -18,6 +18,8 @@ import java.util.List;
 public class ListaNotasActivity extends AppCompatActivity {
 
     public static final String TITULO_APPBAR = "Notas";
+    private ListaNotasAdapter adapter;
+    private List<Nota> notas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,7 @@ public class ListaNotasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_notas);
         setTitle(TITULO_APPBAR);
 
-        List<Nota> notas = notasDeExemplo();
+        notas = notasDeExemplo();
         configuraRecyclerView(notas);
 
         TextView botaoInsereNota = findViewById(R.id.lista_notas_insere_nota);
@@ -41,9 +43,10 @@ public class ListaNotasActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         NotaDAO notaDAO = new NotaDAO();
-        List<Nota> todasNotas = notaDAO.todos();
-        configuraRecyclerView(todasNotas);
-
+        notas.clear();
+        notas.addAll(notaDAO.todos());
+        //Verifica diferenças e realiza adaptação, criando novos View Holders apenas para itens novos.
+        adapter.notifyDataSetChanged();
         super.onResume();
     }
 
@@ -69,6 +72,7 @@ public class ListaNotasActivity extends AppCompatActivity {
 //    }
 
     private void configuraAdapter(List<Nota> notas, RecyclerView listaNotas) {
-        listaNotas.setAdapter(new ListaNotasAdapter(this, notas));
+        adapter = new ListaNotasAdapter(this, notas);
+        listaNotas.setAdapter(adapter);
     }
 }
