@@ -1,16 +1,15 @@
 package com.tassicompany.notas.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.tassicompany.notas.R;
-import com.tassicompany.notas.dao.NotaDAO;
 import com.tassicompany.notas.model.Nota;
 
 public class FormularioNotaActivity extends AppCompatActivity {
@@ -31,11 +30,13 @@ public class FormularioNotaActivity extends AppCompatActivity {
     //Identify all clicked menuItems
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.menu_formulario_ic_salva){
+        if (item.getItemId() == R.id.menu_formulario_ic_salva) {
             EditText titulo = findViewById(R.id.formulario_nota_titulo);
             EditText descricao = findViewById(R.id.formulario_nota_descricao);
             Nota notaCriada = new Nota(titulo.getText().toString(), descricao.getText().toString());
-            new NotaDAO().insere(notaCriada);
+            Intent resultadoInsercao = new Intent();
+            resultadoInsercao.putExtra("nota", notaCriada);
+            setResult(2, resultadoInsercao);
             finish();
 
         }
