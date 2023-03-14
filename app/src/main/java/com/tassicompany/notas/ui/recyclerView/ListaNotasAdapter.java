@@ -63,7 +63,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         }
     }
 
-    public void adicionaNota(Nota nota){
+    public void adicionaNota(Nota nota) {
         notas.add(nota);
         notifyDataSetChanged();
     }

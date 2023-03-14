@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.FormularioNotaActivity">
+    tools:context=".ui.activity.FormularioNotaActivity">
 
     <EditText
         android:id="@+id/formulario_nota_titulo"
@@ -29,6 +29,7 @@
         android:background="@android:color/transparent"
         android:hint="@string/descricao"
         android:gravity="top"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/formulario_nota_titulo"
         app:layout_constraintStart_toStartOf="@id/formulario_nota_titulo"
