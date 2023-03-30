@@ -56,9 +56,9 @@ public class ListaNotasActivity extends AppCompatActivity {
     private List<Nota> pegaTodasNotas() {
         NotaDAO notaDAO = new NotaDAO();
 
-        for (int i = 0; i < 10; i++) {
-            notaDAO.insere(new Nota("Titulo " + (i + 1), "Descrição " + (i + 1)));
-        }
+//        for (int i = 0; i < 10; i++) {
+//            notaDAO.insere(new Nota("Titulo " + (i + 1), "Descrição " + (i + 1)));
+//        }
 
         return notaDAO.todos();
     }
@@ -114,7 +114,7 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     private boolean temNota(@Nullable Intent data) {
-        return data.hasExtra(CHAVE_NOTA);
+        return data != null && data.hasExtra(CHAVE_NOTA);
     }
 
     private boolean resultadoOk(int resultCode) {
@@ -138,7 +138,12 @@ public class ListaNotasActivity extends AppCompatActivity {
         configuraAdapter(notas, listaNotas);
 //        configuraLayoutManager(listaNotas);
         //ItemTouchHelper(One of recyclerView animation feature)
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new NotaItemTouchHelperCallback(adapter));
+        configuraItemTouchHelper(listaNotas);
+    }
+
+    private void configuraItemTouchHelper(RecyclerView listaNotas) {
+        ItemTouchHelper itemTouchHelper =
+                new ItemTouchHelper(new NotaItemTouchHelperCallback(adapter));
         itemTouchHelper.attachToRecyclerView(listaNotas);
     }
 
