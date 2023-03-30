@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#E6CEEA">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista_notas_recycler_view"
@@ -30,7 +31,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Inserir uma nota"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="#5E5E5E"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

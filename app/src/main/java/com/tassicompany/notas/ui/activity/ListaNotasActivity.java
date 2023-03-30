@@ -15,6 +15,7 @@ import com.tassicompany.notas.R;
 import com.tassicompany.notas.dao.NotaDAO;
 import com.tassicompany.notas.model.Nota;
 import com.tassicompany.notas.ui.recyclerView.ListaNotasAdapter;
+import com.tassicompany.notas.ui.recyclerView.adapter.listener.OnItemClickListener;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class ListaNotasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_notas);
         setTitle(TITULO_APPBAR);
         List<Nota> notas = pegaTodasNotas();
+
+
         configuraRecyclerView(notas);
 
         configuraBotaoInsereNota();
@@ -50,17 +53,31 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     private List<Nota> pegaTodasNotas() {
         NotaDAO notaDAO = new NotaDAO();
+
+        for (int i = 0; i < 10; i++) {
+            notaDAO.insere(new Nota("Titulo " + (i + 1), "Descrição " + (i + 1)));
+        }
+
         List<Nota> notas = notaDAO.todos();
         return notas;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (eResultadoComNota(requestCode, resultCode, data)) {
             Nota notaRecebida = (Nota) data.getSerializableExtra("nota");
             adicionaNota(notaRecebida);
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2 &&
+                resultCode == CODIGO_RESULTADO_NOTA_CRIADA &&
+                temNota(data) && data.hasExtra("posicao")) {
+            Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
+            int posicaoRecebida = data.getIntExtra("posicao", -1);
+            new NotaDAO().altera(posicaoRecebida, notaRecebida);
+            adapter.altera(posicaoRecebida, notaRecebida);
+        }
     }
 
     private void adicionaNota(Nota notaRecebida) {
@@ -107,5 +124,14 @@ public class ListaNotasActivity extends AppCompatActivity {
     private void configuraAdapter(List<Nota> notas, RecyclerView listaNotas) {
         adapter = new ListaNotasAdapter(this, notas);
         listaNotas.setAdapter(adapter);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Nota nota, int posicao) {
+                Intent abreFormularioComNota = new Intent(ListaNotasActivity.this, FormularioNotaActivity.class);
+                abreFormularioComNota.putExtra(CHAVE_NOTA, nota);
+                abreFormularioComNota.putExtra("posicao", posicao);
+                startActivityForResult(abreFormularioComNota, 2);
+            }
+        });
     }
 }
